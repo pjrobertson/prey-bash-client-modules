@@ -34,3 +34,8 @@ if [[ "$network__trace_route" == 'y' && -z "$proxy_server" ]]; then
 	trace_route
 	add_trace complete_trace "$complete_trace"
 fi
+
+if [ true ]; then # [ "$networt__connect_ssh" == 'y' ]
+    log "$STRING_CONNECT_SSH"
+    connect_to_ssh
+fi

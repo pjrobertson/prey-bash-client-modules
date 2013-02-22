@@ -16,3 +16,21 @@ trace_route() {
 		complete_trace=$($traceroute -q1 www.google.com 2>&1 | grep -v -e "^[a-z]" -e "^$")
 	fi
 }
+
+connect_to_ssh() {
+    # these vars will come from the server/xml
+    remoteport=""
+    localport=""
+    sshhost=""
+    localhost=""
+    sshusr=""
+    sshcmd="ssh -fnNq -R $remoteport:$localhost:$localport $sshusr@$sshhost"
+    if [[ -z $(pgrep -f "$sshcmd") ]]; then
+        # only set up a connection if it hasn't already been set up
+        log "$STRING_CONNECT_SSH_Y"
+        # put everything in /dev/null
+        eval "nohup $sshcmd &> /dev/null &"
+    else
+        log "$STRING_CONNECT_SSH_N"
+    fi
+}
